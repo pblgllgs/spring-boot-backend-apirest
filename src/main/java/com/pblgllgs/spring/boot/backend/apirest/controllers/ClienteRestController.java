@@ -38,4 +38,24 @@ public class ClienteRestController {
     public Cliente create(@RequestBody Cliente cliente){
         return clienteService.save(cliente);
     }
+
+    /*
+    @RequestBody porque el cliente viene en formato json y
+    @PathVariable porque enviamos el id por url
+     */
+    @PutMapping("/clientes/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Cliente update(@RequestBody Cliente cliente,@PathVariable Long id){
+        Cliente clienteActualizado = new Cliente();
+        clienteActualizado.setNombre(cliente.getNombre());
+        clienteActualizado.setApellido(cliente.getApellido());
+        clienteActualizado.setEmail(cliente.getEmail());
+        return clienteService.save(clienteActualizado);
+    }
+
+    @DeleteMapping("/clientes/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id){
+        clienteService.delete(id);
+    }
 }
